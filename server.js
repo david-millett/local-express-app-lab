@@ -67,9 +67,13 @@ app.post('/nintendo-series', (req, res) => {
 
 app.delete('/nintendo-series/:seriesId', (req, res) => {
     try {
-        const index = Number(req.params.seriesId) - 1
-        nintendoSeries.splice(index, 1)
-        return res.send('This entry has been successfully removed')
+        const seriesId = Number(req.params.seriesId)
+        nintendoSeries.forEach((series, index) => {
+            if (series.id === seriesId) {
+                nintendoSeries.splice(index, 1)
+            }
+        })
+        return res.status(204).send('This entry has been successfully removed')
     } catch (error) {
         console.log(error)
         return res.status(500).send('An error occurred')
@@ -80,9 +84,13 @@ app.delete('/nintendo-series/:seriesId', (req, res) => {
 
 app.put('/nintendo-series/:seriesId', (req, res) => {
     try {
-        const index = Number(req.params.seriesId) - 1
-        nintendoSeries.splice(index, 1, req.body)
-        return res.send('This entry has been udpated')
+        const seriesId = Number(req.params.seriesId)
+        nintendoSeries.forEach((series, index) => {
+            if (series.id === seriesId) {
+                nintendoSeries.splice(index, 1, req.body)
+            }
+        })
+        return res.status(201).send('This entry has been udpated')
     } catch (error) {
         console.log(error)
         return res.status(500).send('An error occurred')
